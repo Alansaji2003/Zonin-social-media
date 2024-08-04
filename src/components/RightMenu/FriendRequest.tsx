@@ -23,10 +23,10 @@ export default async function FriendRequest({}: Props) {
   if(requests.length === 0) return null;
 
   return (
-    <div className='p-4 bg-white rounded-lg shadow-md text-sm flex flex-col gap-4'>
+    <div className='p-4 bg-slate-800 text-white rounded-lg shadow-md text-sm flex flex-col gap-4'>
         {/* toppart */}
         <div className='flex justify-between items-center font-medium'>
-            <span className='text-gray-500'>Friend Requests</span>
+            <span className='text-gray-300'>Friend Requests</span>
             <Link href='/' className='text-red-500 text-xs'>See all</Link>
         </div>
         {/* userpart */}

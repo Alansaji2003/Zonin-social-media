@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { StoryWithUser } from "@/lib/types";
 
-
 const StoryList = ({
   initialStories,
   userId,
@@ -15,16 +14,14 @@ const StoryList = ({
   initialStories: StoryWithUser[];
   userId: string;
 }) => {
-  console.log(initialStories);
-  if (!initialStories) return <div>No stories</div>;
-
+  // Ensure hooks are called at the top level
+  const { user, isLoaded } = useUser();
   const [storyList, setStoryList] = useState<StoryWithUser[]>(initialStories);
   const [isHidden, setIsHidden] = useState(true);
   const [img, setImg] = useState<any>(null);
   const [selectedStory, setSelectedStory] = useState<StoryWithUser | null>(null);
 
-  const { user, isLoaded } = useUser();
-  console.log(storyList);
+  if (!initialStories) return <div>No stories</div>;
 
   const add = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -32,7 +29,6 @@ const StoryList = ({
 
     try {
       const createdStory = await addStory(img.secure_url);
-      // console.log(createdStory);
       setStoryList((prev) => [createdStory, ...prev]);
       setImg(null);
       

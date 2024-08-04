@@ -6,9 +6,9 @@ import { IoClose } from 'react-icons/io5';
 import { acceptFollowRequest, declineFollowRequest } from '@/lib/actions';
 
 function FriendRequestList({ requests }: { requests: any }) {
-  if (requests.length === 0) return null;
-
   const [requestState, setRequestState] = useState(requests);
+
+  if (requestState.length === 0) return null;
 
   const handleAccept = async (userId: string) => {
     try {
