@@ -1,0 +1,51 @@
+{
+  "name": "zon-in",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "npx drizzle-kit push",
+    "db:studio": "npx drizzle-kit studio"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^5.2.3",
+    "@clerk/themes": "^2.1.16",
+    "@eslint/config-array": "latest",
+    "@eslint/object-schema": "latest",
+    "@neondatabase/serverless": "^0.9.4",
+    "axios": "^1.7.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.32.0",
+    "emoji-picker-react": "^4.11.1",
+    "glob": "latest",
+    "lru-cache": "latest",
+    "moment": "latest",
+    "next": "latest",
+    "next-cloudinary": "^6.7.0",
+    "pg": "latest",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
+    "react-icons": "latest",
+    "rimraf": "latest",
+    "svix": "^1.26.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "drizzle-kit": "^0.23.0",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}
