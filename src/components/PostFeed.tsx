@@ -123,7 +123,7 @@ export default async function PostFeed({ username }: PostsFeedProps) {
   let postsFeed: PostType[] = [];
 
   try {
-    if (username) {
+    if (username != 'false') {
       postsFeed = Object.values(await fetchPosts(eq(users.username, username)));
     } else {
       const people = await db.query.followers.findMany({

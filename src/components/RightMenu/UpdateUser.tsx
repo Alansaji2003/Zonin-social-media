@@ -59,7 +59,11 @@ function UpdateUser({ user }: { user?: UserType[] }) {
             <CldUploadWidget
               uploadPreset="zoninApp"
               options={{ clientAllowedFormats: ["image"] }}
-              onSuccess={(result) => setCover(result.info?.secure_url)}
+              onSuccess={(result) => {
+                if (typeof result.info !== 'string' && result.info?.secure_url) {
+                  setCover(result.info.secure_url);
+                }
+              }}
             >
               {({ open }) => {
                 return (
