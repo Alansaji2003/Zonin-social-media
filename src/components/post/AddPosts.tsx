@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import AddPostButton from '../botton/AddPostButton';
 import { addPost, addVedioPost } from '@/lib/actions';
+import { set } from 'zod';
 
 export default function AddPosts() {
   const { user, isLoaded } = useUser();
@@ -17,6 +18,9 @@ export default function AddPosts() {
   const [UIvideo, setUIvideo] = useState<string>("/addVideo.png");
   const [imgtext, setimgText] = useState<string>("photo");
   const [vdotext, setvdoText] = useState<string>("vedio");
+  const [placeholderTxt, setPlaceholderTxt] = useState<string>("What's on your mind?");
+  const [loading, setLoading] = useState(false);
+
   if (!isLoaded) return "Loading...";
 
   const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
@@ -29,6 +33,7 @@ export default function AddPosts() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     const formData = new FormData();
     formData.append('desc', desc);
@@ -37,6 +42,8 @@ export default function AddPosts() {
       await addPost(formData, img.secure_url);
     } else if (video) {
       await addVedioPost(formData, video.secure_url);
+    }else{
+      await addPost(formData, "");
     }
 
     setDesc('');
@@ -45,7 +52,9 @@ export default function AddPosts() {
     setUIimage("/addimage.png");
     setvdoText("vedio");
     setimgText("photo");
-    setUIvideo("/addvideo.png");
+    setUIvideo("/addVideo.png");
+    setPlaceholderTxt("What's on your mind?");
+    setLoading(false);
   };
 
   return (
@@ -57,7 +66,7 @@ export default function AddPosts() {
       <div className='flex-1'>
         <form onSubmit={handleSubmit} className='flex gap-4'>
           <textarea
-            placeholder='What is on your mind?'
+            placeholder={placeholderTxt}
             className='flex-1 bg-slate-700 rounded-lg p-2'
             name="desc"
             value={desc}
@@ -78,7 +87,7 @@ export default function AddPosts() {
                 <EmojiPicker className=" z-30" onEmojiClick={handleEmojiClick} />
               </div>
             )}
-            <AddPostButton />
+            <AddPostButton loading={loading}/>
           </div>
         </form>
         
@@ -90,7 +99,8 @@ export default function AddPosts() {
             onSuccess={(result, { widget }) => { 
               if (typeof result.info !== 'string' && result.info?.secure_url) {
                 setUIimage(result.info.secure_url);
-                setimgText("photo ready");
+                setPlaceholderTxt("Add a caption for your photo....!");
+                setimgText("photo ready!");
                 setImg(result.info);
               }
               widget.close();
@@ -104,12 +114,14 @@ export default function AddPosts() {
           </CldUploadWidget>
 
           <CldUploadWidget 
+            
             options={{ clientAllowedFormats: ["video"] }} 
             uploadPreset="zoninApp" 
             onSuccess={(result, { widget }) => { 
               if (typeof result.info !== 'string' && result.info?.secure_url) {
                 setUIvideo("/videoUP.png");
                 setVideo(result.info);
+                setPlaceholderTxt("Add a caption for your video....!");
                 setvdoText("vedio ready");
               }
               widget.close();
