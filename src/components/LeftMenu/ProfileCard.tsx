@@ -68,7 +68,7 @@ async function ProfileCard() {
           <span className="text-xs text-gray-100"> {user[0]?.followerCount} followers</span>
         </div>
         
-        <Button user = {user[0]}/>
+        <Button username = {user[0]?.username}/>
       </div>
     </div>
   )

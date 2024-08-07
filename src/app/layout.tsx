@@ -27,7 +27,7 @@ export default function RootLayout({
     }}>
       <html lang="en">
         <body className={inter.className}>
-          <div className="w-full px-4 bg-slate-900 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+          <div className="w-full px-4 bg-slate-800 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
             <NavBar />
           </div>
           <div className="w-full px-4 bg-black md:px-8 lg:px-16 xl:px-32 2xl:px-64">

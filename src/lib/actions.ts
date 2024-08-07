@@ -227,6 +227,36 @@ export const addPost = async (formData:FormData, img:string) => {
    
 }
 
+export const addVedioPost = async (formData:FormData, vedio:string) => {
+  
+      const desc = formData.get("desc") as string;
+      if(!desc) return;
+      const Desc = z.string().min(1).max(255);
+  
+      const validateddesc = Desc.safeParse(desc);
+  
+      if(!validateddesc.success){
+          console.log("Invalid description");
+          
+          return;
+      }   
+      const {userId} = auth();
+      if(!userId) throw new Error("User not authenticated");
+      try{
+          await db.insert(posts).values({
+            
+              userId:userId,
+              description:validateddesc.data,
+              img:vedio,
+              
+          })
+  
+          revalidatePath("/")
+      }catch(e){
+          console.log(e);
+          throw new Error("Failed to add post");
+      }
+}
 
 const getUserById = async (userId: string): Promise<User> => {
     try {
@@ -315,5 +345,17 @@ export const deletePost = async (postId: number) => {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to delete the post");
+    }
+}
+
+export const getAllUsers = async () => {
+  const { userId } = auth();
+  if (!userId) throw new Error("User not authenticated");
+    try {
+        const Users = await db.query.users.findMany();
+        return Users;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to fetch users");
     }
 }

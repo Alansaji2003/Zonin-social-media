@@ -8,7 +8,7 @@ function AddPostButton() {
 
     const {pending} = useFormStatus();
   return (
-    <button className='bg-red-500 p-2 mt-2 rounded-md text-white disabled:bg-red-300 disabled:cursor-not-allowed' disabled={pending}>{
+    <button type='submit' className='bg-red-500 p-2 mt-2 rounded-md text-white disabled:bg-red-300 disabled:cursor-not-allowed' disabled={pending}>{
         pending?<div className='flex items-center gap-2'>
              <FaSpinner className="animate-spin text-black"/>
              Sending

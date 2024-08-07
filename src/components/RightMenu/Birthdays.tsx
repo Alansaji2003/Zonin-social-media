@@ -11,7 +11,7 @@ export default function Birthdays({}: Props) {
        
         {/* toppart */}
         <div className='flex justify-between items-center font-medium'>
-            <span className='text-gray-400'>Birthdays</span>
+            <span className='text-gray-400'>Birthdays (In development) </span>
             <Link href='/' className='text-red-500 text-xs'>See all</Link>
         </div>
         {/* userpart */}

@@ -1,17 +1,22 @@
-"use client"
+"use client";
 import Link from "next/link";
 import MenuButton from "./MenuButton";
 import { CiHome } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
-import { LuCircleDashed, LuLogIn } from "react-icons/lu";
+import { LuLogIn } from "react-icons/lu";
 import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { CgSpinner } from "react-icons/cg";
 import Image from "next/image";
+import Search from "./Search";
+
+
 
 const NavBar = () => {
+
+  
   return (
-    <div className="h-24 flex justify-between items-center px-4 md:px-8 lg:px-12">
+    <div className="relative h-24 flex justify-between items-center px-4 md:px-8 lg:px-12 bg-slate-800">
       <div className="flex w-auto">
         <Link className="font-bold text-2xl text-red-600" href="/">
           Zonin!
@@ -23,14 +28,13 @@ const NavBar = () => {
           <Link className="flex gap-2 items-center" href="/"><CiHome className="text-red-600" />Home</Link>
           <Link className="flex gap-2 items-center" href="/friends"><FaUserFriends className="text-red-600" />Friends</Link>
           <Link className="flex gap-2 items-center" href="/groups"><MdGroups className="text-red-600" />Groups</Link>
-
         </div>
-        <div className="hidden xl:flex p-2 bg-slate-800 items-center text-white rounded-md ">
-          <input type="text" placeholder="Search.." className="bg-transparent outline-none" />
-          <Image src="/search.png" alt="Search Icon" width={14} height={14} />
-        </div>
+        <Search/>
       </div>
-
+      <div className="md:hidden xl:hidden">
+      <Search/>
+      </div>
+      
       <div className="flex items-center gap-4 xl:gap-4 justify-end">
         <ClerkLoading>
           <CgSpinner className="animate-spin text-red-600" />
@@ -54,7 +58,7 @@ const NavBar = () => {
         <MenuButton />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default NavBar;

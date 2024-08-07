@@ -4,22 +4,22 @@ import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation'
 import { FaSpinner } from 'react-icons/fa';
 
-function Button({ user }: { user: any }) {
+function Button({ username }: {  username:string|null | undefined}) {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
   const pathname = usePathname()
 
   const goToProfile = async () => {
     setLoading(true);
-    router.push(`/profile/${user.username}`);
+    router.push(`/profile/${username}`);
   };
 
   useEffect(() => {
-    if (loading && pathname === `/profile/${user.username}`) {
+    if (loading && pathname === `/profile/${username}`) {
       setLoading(false);
     }
     
-  }, [loading, pathname, user.username]);
+  }, [loading, pathname, username]);
 
   return (
     <div>

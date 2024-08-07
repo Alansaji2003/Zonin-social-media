@@ -1,13 +1,14 @@
 "use client";
 import Image from 'next/image';
 import Comments from '../Comments';
-import { CustomImage } from '../CostomImage';
+import { CustomImage } from '../CostomImage'; 
 import { useState, useEffect, Suspense } from 'react';
 import PostInteraction from './PostInteraction';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import PostInfo from './PostInfo';
 import { useUser } from '@clerk/nextjs';
+import { CustomVideo } from '../CustomVideo';
 
 type UserType = {
     id: string;
@@ -52,7 +53,7 @@ type LikeType = {
 };
 
 export default function Posts({ post }: { post: PostType | null }) {
-    const { user } = useUser(); // Moved outside of conditional
+    const { user } = useUser(); 
     const [avatar, setAvatar] = useState<string | null>(null);
     const [img, setImg] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
@@ -72,7 +73,9 @@ export default function Posts({ post }: { post: PostType | null }) {
 
     if (!post) return null;
     if (!user) return null;
-
+    
+    const isVideo = img ? img.endsWith(".mp4") || img.endsWith(".webm") || img.endsWith(".ogg") : false;
+    
     return (
         <div className='p-4 bg-slate-800 text-white flex flex-col gap-4 shadow-md rounded-lg'>
             {/* user */}
@@ -89,12 +92,20 @@ export default function Posts({ post }: { post: PostType | null }) {
             <div className='flex flex-col gap-4'>
                 {img && (
                     <div className='w-full min-h-96 relative'>
-                        <CustomImage
-                            src={img || ""}
-                            alt="Lighthouse on cliff at seashore on sunset"
-                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, 600px"
-                            isPortrait={false}
-                        />
+                        {isVideo ? (
+                            <CustomVideo
+                                src={img || ""}
+                                alt="post video"
+                                isPortrait={false}
+                            />
+                        ) : (
+                            <CustomImage
+                                src={img || ""}
+                                alt="post image"
+                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, 600px"
+                                isPortrait={false}
+                            />
+                        )}
                     </div>
                 )}
                 <p className='font-bold'>{description}</p>

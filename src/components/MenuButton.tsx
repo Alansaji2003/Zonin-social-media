@@ -1,10 +1,27 @@
 "use client"
 import Link from "next/link"
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
+import Button from "./botton/Button"
+import { useUser } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
+
 
 const  MenuButton = () => {
-
+    const path = usePathname();
+    const currentPath = path.split("/")[1];
     const [isOpen, setIsOpen] = useState(false)
+    const { user, isLoaded } = useUser();
+    const [username, setUsername] = useState<string | null >(null);
+
+    useEffect(() => {
+      if (isLoaded && user) {
+        setUsername(user.username);
+      }
+      if(path !== currentPath){ 
+        setIsOpen(false);
+      }
+    }, [isLoaded, user, path]);
+   
 
 
 
@@ -18,11 +35,12 @@ const  MenuButton = () => {
 
         {isOpen && (
             <div className="absolute left-0 top-24 w-full h-[calc(100vh-96px)] bg-slate-800 text-white flex flex-col items-center justify-center gap-8 font-medium text-xl z-10">
+               <Button username = {user?.username}/>
                 <Link href='/'>Home</Link>
                 <Link href='/'>Search</Link>
                 <Link href='/'>Friends</Link>
                 <Link href='/'>Groups</Link>
-                <Link href='/'>Profile</Link>
+                
                 
             </div>
         )}
