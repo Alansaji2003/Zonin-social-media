@@ -14,7 +14,7 @@ export default function AddPosts() {
   const [video, setVideo] = useState<any>(null);
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const [UIimage, setUIimage] = useState<string>("/addimage.png");
-  const [UIvideo, setUIvideo] = useState<string>("/addvideo.png");
+  const [UIvideo, setUIvideo] = useState<string>("/addVideo.png");
   const [imgtext, setimgText] = useState<string>("photo");
   const [vdotext, setvdoText] = useState<string>("vedio");
   if (!isLoaded) return "Loading...";
