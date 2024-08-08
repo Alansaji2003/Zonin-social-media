@@ -125,7 +125,7 @@ function UpdateUser({ user }: { user?: UserType[] }) {
             <button className='bg-red-600 p-2 mt-2 rounded-md text-white flex items-center justify-center' disabled={loading}>
               {loading ? <ImSpinner3 className='animate-spin mr-2' /> : 'Update'}
             </button>
-            <div className='absolute text-lg right-6 top-5 cursor-pointer' onClick={() => setOpen(false)}>
+            <div className='absolute text-lg top-[16%] right-[10%] md:right-10 md:top-10 cursor-pointer' onClick={() => setOpen(false)}>
               X
             </div>
           </form>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '../../../utils/dbConfig';
-import { posts } from '../../../utils/schema'; 
+import { posts } from '../../../utils/schema';
 import { and, desc, eq, isNotNull } from 'drizzle-orm';
 
 type UserType = {
@@ -35,6 +35,7 @@ export default async function UserMediaCard({ user }: { user?: UserType[] }) {
     });
 
     if (postWithMedia.length === 0) return null;
+    
 
     return (
         <div className='p-4 bg-slate-800 rounded-lg shadow-md text-sm flex flex-col gap-4'>
@@ -46,13 +47,14 @@ export default async function UserMediaCard({ user }: { user?: UserType[] }) {
             {/* bottom */}
             <div className='flex gap-4 justify-between flex-wrap'>
                 {postWithMedia.map((post) => (
-                    post.img && post.img.trim() !== "" ? (
+                    post.img && post.img.trim() !== "" && !/mp4|video/i.test(post.img) ? (
                         <div className='relative w-1/5 h-24' key={post.id}>
                             <Image src={post.img} alt="" fill className="object-cover rounded-md" />
                         </div>
                     ) : null
                 ))}
             </div>
+
         </div>
     );
 }

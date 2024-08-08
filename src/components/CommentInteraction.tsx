@@ -76,17 +76,17 @@ function CommentInteraction({ Comments, postId }: { Comments: Comment[], postId:
         <>
             <div>
                 {user && (
-                    <div className='flex items-center gap-4 ' >
+                    <div className='flex items-center gap-2 w-[90%]' >
                         <Image alt='' src={user?.imageUrl || "/noAvatar.png"} width={32} height={32} className='w-8 h-8 rounded-full' />
                         <form onSubmit={(e) => handleSubmit(e, postId)} className='flex-1 flex items-center justify-between bg-slate-700 rounded-xl text-sm px-6 py-2 w-full'>
                             <input
                                 type='text'
                                 placeholder='Write a comment'
-                                className='bg-transparent outline-none flex-1'
+                                className='bg-transparent outline-none flex-1 '
                                 value={description[postId] || ""}
                                 onChange={e => setDescription({ ...description, [postId]: e.target.value })}
                             />
-                            <button type="submit" className='cursor-pointer bg-red-500 rounded-lg text-slate-200 p-2'>
+                            <button type="submit" className='cursor-pointer bg-red-500 rounded-lg text-slate text-xs p-2'>
                                 send
                             </button>
                         </form>

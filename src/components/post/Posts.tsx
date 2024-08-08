@@ -89,14 +89,14 @@ export default function Posts({ post }: { post: PostType | null }) {
                 {user.id === post.userId && <PostInfo postId={post.id} />}
             </div>
             {/* desc */}
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-2'>
                 {img && (
                     <div className='w-full min-h-96 relative'>
                         {isVideo ? (
                             <CustomVideo
                                 src={img || ""}
                                 alt="post video"
-                                isPortrait={false}
+                                
                             />
                         ) : (
                             <CustomImage

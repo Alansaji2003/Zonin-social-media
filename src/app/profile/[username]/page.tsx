@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { auth } from '@clerk/nextjs/server'
 
 import ProfilePageInteraction from "@/components/ProfilePageInteraction"
+import UserInfoCard from "@/components/RightMenu/UserInfoCard"
 
 
 
@@ -133,6 +134,10 @@ const user = await db
               <p className='mb-2 text-sx font-small text-slate-500'>@{user[0]?.username}</p>
              <ProfilePageInteraction user={user}/>
             </div>
+            <div className="md:hidden">
+            <UserInfoCard user={user}/>
+            </div>
+            
             {username == user[0]?.username || isFollowing? (<PostFeed username={user[0]?.username} />):(<></>) }
             
           </div>

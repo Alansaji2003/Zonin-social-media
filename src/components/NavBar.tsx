@@ -16,7 +16,7 @@ const NavBar = () => {
 
   
   return (
-    <div className="relative h-24 flex justify-between items-center px-4 md:px-8 lg:px-12 bg-slate-800">
+    <div className="relative h-24 flex gap-2 justify-between items-center px-4 md:px-8 lg:px-12 bg-slate-800">
       <div className="flex w-auto">
         <Link className="font-bold text-2xl text-red-600" href="/">
           Zonin!

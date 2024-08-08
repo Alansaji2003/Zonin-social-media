@@ -142,13 +142,13 @@ export default async function PostFeed({ username }: PostsFeedProps) {
   }
 
   return (
-    <div className='flex flex-col gap-12'>
+    <div className=' flex flex-col gap-12'>
       {postsFeed.reverse().length > 0 ? (
         postsFeed.map((post) => (
           <Posts key={String(post.id)} post={post} />
         ))
       ) : (
-        <h1 className='text-xs text-slate-500 self-center'>Follow some users to see their posts</h1>
+        <h1 className='text-xs text-slate-500 self-center h-screen'>No posts available</h1>
       )}
     </div>
   );

@@ -37,7 +37,7 @@ export default async function Page() {
 
   return (
     <div className='bg-slate-800 h-screen text-white'>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-center gap-2'>
         <div className='h-screen rounded-md bg-slate-700 w-[40%] flex flex-col items-center'>
           <h1 className='text-red-500 text-2xl font-bold mt-5'>Followers</h1>
           <div className='mt-5'>

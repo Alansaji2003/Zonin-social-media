@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
+
 type User = {
   id: string;
   username: string;
@@ -24,7 +25,7 @@ function Search() {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -64,39 +65,49 @@ function Search() {
     }
   }, [searchInput, users]);
 
-  useEffect(() => {
-    if (loading && pathname.includes('/profile/')) {
+  const goToProfile = async (username: string | null | undefined) => {
+    if (!username) return;
+    
+    setLoading(true);
+    try {
+      await router.push(`/profile/${username}`);
+    } finally {
       setLoading(false);
     }
-    
-  }, [loading, pathname]);
-
-  const goToProfile = async (username:String | null | undefined) => {
-    setLoading(true);
-    router.push(`/profile/${username}`);
   };
 
   return (
-    <div className="relative xl:flex p-2 bg-slate-700 items-center text-white rounded-md  sm:w-full md:w-3/4 lg:w-2/3 xl:w-1/2" ref={searchContainerRef}>
-  <input
-    type="text"
-    placeholder="Search.."
-    className="bg-transparent outline-none w-full"
-    value={searchInput}
-    onChange={(e) => setSearchInput(e.target.value)}
-  />
-  <Image className='hidden md:block' src="/search.png" alt="Search Icon" width={14} height={14} />
-  {searchResults.length > 0 && (
-    <div className="absolute left-0 top-full mt-2 w-full bg-slate-700 text-white rounded-md shadow-lg z-10">
-      {searchResults.map((user) => (
-        <div onClick={() => goToProfile(user?.username)} key={user.id} className="px-4 py-2 hover:bg-gray-500 cursor-pointer">
-          {user.username} {loading && <FaSpinner className="animate-spin text-white" />}
+    <div
+      className="relative xl:flex p-2 bg-slate-700 items-center text-white rounded-md sm:w-full md:w-3/4 lg:w-2/3 xl:w-1/2"
+      ref={searchContainerRef}
+    >
+      <input
+        type="text"
+        placeholder="Search.."
+        className="bg-transparent outline-none w-full"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+      />
+      <Image className="hidden md:block" src="/search.png" alt="Search Icon" width={14} height={14} />
+      {searchResults.length > 0 && (
+        <div className="absolute left-0 top-full mt-2 w-full bg-slate-700 text-white rounded-md shadow-lg z-10">
+          {loading && (
+            <div className="flex justify-center items-center p-2">
+              <FaSpinner className="animate-spin text-white" />
+            </div>
+          )}
+          {!loading && searchResults.map((user) => (
+            <div
+              onClick={() => goToProfile(user?.username)}
+              key={user.id}
+              className="px-4 py-2 hover:bg-gray-500 cursor-pointer flex items-center gap-1"
+            >
+              {user.username}
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
-  )}
-</div>
-
   );
 }
 
