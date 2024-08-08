@@ -116,6 +116,8 @@ const user = await db
     if(res || res2) isBlocked = true;
   }
   if(isBlocked ) return <div>User Blocked</div>;
+  console.log(isFollowing);
+  
   
   return (
     isBlocked ? "User Blocked" : (
@@ -138,7 +140,7 @@ const user = await db
             <UserInfoCard user={user}/>
             </div>
             
-            {username == user[0]?.username || isFollowing? (<PostFeed username={user[0]?.username} />):(<></>) }
+            {username == user[0]?.username && isFollowing? (<PostFeed username={user[0]?.username} />):(<></>) }
             
           </div>
         </div>
