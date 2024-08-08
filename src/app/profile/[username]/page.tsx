@@ -16,7 +16,7 @@ import UserInfoCard from "@/components/RightMenu/UserInfoCard"
 
 const ProfilePage = async({params}:{params:{username:string }}) => {
 
-
+  let currUsername;
 
   const username = params.username;
   const {userId} = auth();
@@ -87,6 +87,9 @@ const user = await db
   let isBlocked:boolean = false;
   
   if (currUserId) {
+     currUsername = await db.query.users.findFirst({
+      where: eq(users.id, currUserId)
+    })
     const res = await db.query.blocks.findFirst({
       where: and(
         eq(blocks.blockerId, user[0]?.id),
@@ -116,7 +119,10 @@ const user = await db
     if(res || res2) isBlocked = true;
   }
   if(isBlocked ) return <div>User Blocked</div>;
-  console.log(isFollowing);
+  console.log(username);
+  console.log(user[0]?.username);
+  
+  
   
   
   return (
@@ -140,7 +146,7 @@ const user = await db
             <UserInfoCard user={user}/>
             </div>
             
-            {username == user[0]?.username && isFollowing? (<PostFeed username={user[0]?.username} />):(<></>) }
+            {isFollowing || username == currUsername?.username? (<PostFeed username={user[0]?.username} />):(<></>) }
             
           </div>
         </div>
