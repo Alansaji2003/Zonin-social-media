@@ -1,6 +1,11 @@
 ## Demo
 ![demo webp](https://alansaji-portfolio.netlify.app/assets/img/proj29.webp)
 
+## Link to website
+https://zonin-social-media.vercel.app/
+
+Since clerk is in development mode right now, after you create your account, click on the above link again to go to the website. Thank you
+
 This is a [Next.js](https://nextjs.org/) project
 ## Getting Started
 
