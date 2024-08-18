@@ -14,7 +14,7 @@ const Homepage = () => {
         <div className="flex flex-col gap-6"> 
           <Stories/>
           <AddPosts/>
-          <div className="md:hidden">
+          <div className="lg:hidden">
           <FriendRequest />
           </div>
           <PostFeed username="false"/>
