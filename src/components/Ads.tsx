@@ -5,7 +5,7 @@ type Props = {}
 
 export default function Ads({ size }: { size: "sm" | "md" | "lg" }) {
     return (
-        <div className='p-4 bg-slate-800 text-gray-400 rounded-lg shadow-md text-sm'>
+        <div className='hidden md:block p-4 bg-slate-800 text-gray-400 rounded-lg shadow-md text-sm'>
             {/* top */}
             <div className='flex items-center justify-between text-gray-500 font-medium'>
                 <span>Sponsored Ads</span>

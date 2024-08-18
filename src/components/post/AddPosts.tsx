@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import AddPostButton from '../botton/AddPostButton';
 import { addPost, addVedioPost } from '@/lib/actions';
-import { set } from 'zod';
+
 
 export default function AddPosts() {
   const { user, isLoaded } = useUser();
@@ -17,7 +17,7 @@ export default function AddPosts() {
   const [UIimage, setUIimage] = useState<string>("/addimage.png");
   const [UIvideo, setUIvideo] = useState<string>("/addVideo.png");
   const [imgtext, setimgText] = useState<string>("photo");
-  const [vdotext, setvdoText] = useState<string>("vedio");
+  const [vdotext, setvdoText] = useState<string>("video");
   const [placeholderTxt, setPlaceholderTxt] = useState<string>("What's on your mind?");
   const [loading, setLoading] = useState(false);
 
@@ -122,7 +122,7 @@ export default function AddPosts() {
                 setUIvideo("/videoUP.png");
                 setVideo(result.info);
                 setPlaceholderTxt("Add a caption for your video....!");
-                setvdoText("vedio ready");
+                setvdoText("video ready");
               }
               widget.close();
             }}>

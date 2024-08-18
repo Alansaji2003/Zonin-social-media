@@ -7,7 +7,7 @@ type Props = {}
 
 export default function Birthdays({}: Props) {
   return (
-    <div className='p-4 bg-slate-800 text-white rounded-lg shadow-md text-sm flex flex-col gap-4'>
+    <div className='hidden md:block p-4 bg-slate-800 text-white rounded-lg shadow-md text-sm flex flex-col gap-4'>
        
         {/* toppart */}
         <div className='flex justify-between items-center font-medium'>
