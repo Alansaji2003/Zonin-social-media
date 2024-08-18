@@ -3,6 +3,7 @@ import LeftMenu from "@/components/LeftMenu/LeftMenu"
 import PostFeed from "@/components/PostFeed"
 import RightMenu from "@/components/RightMenu/RightMenu"
 import Stories from "@/components/Stories"
+import FriendRequest from "@/components/RightMenu/FriendRequest"
 
 
 const Homepage = () => {
@@ -18,6 +19,7 @@ const Homepage = () => {
         </div>
       </div>
       <div className="hidden lg:block w-[30%]"><RightMenu/></div>
+      <FriendRequest />
     </div>
   )
 }
