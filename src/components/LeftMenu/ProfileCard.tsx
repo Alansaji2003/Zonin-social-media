@@ -47,7 +47,7 @@ async function ProfileCard() {
       users.createdAt
     );
   
-    // console.log(user);
+    console.log(user);
     
   
   if(!user) return null;
