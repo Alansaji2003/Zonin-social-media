@@ -12,6 +12,7 @@ async function ProfileCard() {
   
   const {userId} = auth();
   
+  console.log(userId);
   
   if (userId == null) return null;
     const user = await db.select({
