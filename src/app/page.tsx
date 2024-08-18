@@ -14,14 +14,13 @@ const Homepage = () => {
         <div className="flex flex-col gap-6"> 
           <Stories/>
           <AddPosts/>
+          <FriendRequest />
           <PostFeed username="false"/>
           
         </div>
       </div>
       <div className="hidden lg:block w-[30%]"><RightMenu/></div>
-      {/* <div className="md:hidden">
-      <FriendRequest />
-      </div> */}
+      
      
     </div>
   )
