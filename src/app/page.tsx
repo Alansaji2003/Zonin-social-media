@@ -19,7 +19,10 @@ const Homepage = () => {
         </div>
       </div>
       <div className="hidden lg:block w-[30%]"><RightMenu/></div>
+      {/* <div className="md:hidden">
       <FriendRequest />
+      </div> */}
+     
     </div>
   )
 }
