@@ -21,7 +21,7 @@ export const switchFollow = async(userId:string) => {
             await db.delete(followers).where(eq(followers.id, existingFollow.id));
         }else{
             const existingFollowRequest = await db.query.followRequests.findFirst({
-                where:and(eq(followRequests.senderId,currentUser), eq(followRequests.receiverId, userId))
+                where:and(eq(followRequests.senderId,currentUser), eq(followRequests.recieverId, userId))
             })
             if(existingFollowRequest){
                 await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));
@@ -29,7 +29,7 @@ export const switchFollow = async(userId:string) => {
             }else{
                 await db.insert(followRequests).values({
                     senderId:currentUser,
-                    receiverId:userId,
+                    recieverId:userId,
                 })
             }
         }
@@ -69,7 +69,7 @@ export const acceptFollowRequest = async(userId:string) => {
 
 try{
     const existingFollowRequest = await db.query.followRequests.findFirst({
-        where:and(eq(followRequests.senderId, userId), eq(followRequests.receiverId, currentUser))
+        where:and(eq(followRequests.senderId, userId), eq(followRequests.recieverId, currentUser))
     })
     if(existingFollowRequest){
         await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));
@@ -89,7 +89,7 @@ export const declineFollowRequest = async(userId:string) => {
     if(!currentUser) throw new Error("User not authenticated");
     try{
         const existingFollowRequest = await db.query.followRequests.findFirst({
-            where:and(eq(followRequests.senderId, userId), eq(followRequests.receiverId, currentUser))
+            where:and(eq(followRequests.senderId, userId), eq(followRequests.recieverId, currentUser))
         })
         if(existingFollowRequest){
             await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));

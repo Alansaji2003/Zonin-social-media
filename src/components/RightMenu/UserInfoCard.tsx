@@ -52,7 +52,7 @@ export default async function UserInfoCard({ user }: { user?: UserType[] }) {
             db.query.followRequests.findFirst({
                 where: and(
                     eq(followRequests.senderId, currUserId),
-                    eq(followRequests.receiverId, userId)
+                    eq(followRequests.recieverId, userId)
                 )
             })
         ]);

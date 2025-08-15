@@ -56,7 +56,7 @@ export type StoryWithUser = {
 export type FollowRequest = {
   id: number;
   senderId: string;
-  receiverId: string;
+  recieverId: string;
   createdAt: Date;
   sender: User;
 };

@@ -54,9 +54,9 @@ export const followRequests = pgTable('FollowRequest', {
   id: serial('id').primaryKey(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   senderId: varchar('senderId', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  receiverId: varchar('receiverId', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }).notNull()
+  recieverId: varchar('recieverId', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }).notNull()
 }, (table) => ({
-  unq:unique().on(table.senderId, table.receiverId)
+  unq:unique().on(table.senderId, table.recieverId)
 }));
 
 export const blocks = pgTable('Block', {

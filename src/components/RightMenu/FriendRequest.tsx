@@ -14,7 +14,7 @@ export default async function FriendRequest({}: Props) {
   if(!userId) return null;
 
   const requests = await db.query.followRequests.findMany({
-    where:eq(followRequests.receiverId, userId),
+    where:eq(followRequests.recieverId, userId),
     with:{
       sender:true
     }
