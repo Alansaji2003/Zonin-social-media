@@ -9,50 +9,9 @@ import { usePathname } from 'next/navigation';
 import PostInfo from './PostInfo';
 import { useUser } from '@clerk/nextjs';
 import { CustomVideo } from '../CustomVideo';
+import { Post } from '@/lib/types';
 
-type UserType = {
-    id: string;
-    username: string;
-    avatar: string | null;
-    cover: string | null;
-    f_name: string | null;
-    l_name: string | null;
-    description: string | null;
-    city: string | null;
-    school: string | null;
-    work: string | null;
-    website: string | null;
-    createdAt: Date | null;
-};
-
-type PostType = {
-    id: number;
-    userId: string;
-    img: string | null;
-    description: string | null;
-    createdAt: Date | null;
-    updatedAt: Date | null;
-    user: UserType;
-    comments: CommentType[];
-    likes: LikeType[];
-};
-
-type CommentType = {
-    id: number;
-    postId: number;
-    userId: string;
-    description: string;
-    createdAt: Date;
-};
-
-type LikeType = {
-    id: number;
-    postId: number;
-    userId: string;
-    createdAt: Date;
-};
-
-export default function Posts({ post }: { post: PostType | null }) {
+export default function Posts({ post }: { post: Post | null }) {
     const { user } = useUser(); 
     const [avatar, setAvatar] = useState<string | null>(null);
     const [img, setImg] = useState<string | null>(null);
@@ -63,7 +22,7 @@ export default function Posts({ post }: { post: PostType | null }) {
 
     useEffect(() => {
         if (post) {
-            setAvatar(post.user?.avatar);
+            setAvatar(post.user?.avatar || null);
             setImg(post.img);
             setUsername(post.user?.username);
             setDescription(post.description);

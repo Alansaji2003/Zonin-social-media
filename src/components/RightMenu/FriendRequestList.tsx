@@ -14,8 +14,8 @@ function FriendRequestList({ requests }: { requests: any }) {
     try {
       await acceptFollowRequest(userId);
       setRequestState((prevRequests: any) => prevRequests.filter((request: any) => request.sender.id !== userId));
-    } catch (e) {
-      console.log("Failed to accept follow request", e);
+    } catch (error) {
+      console.error("Failed to accept follow request:", error);
     }
   };
 
@@ -23,8 +23,8 @@ function FriendRequestList({ requests }: { requests: any }) {
     try {
       await declineFollowRequest(userId);
       setRequestState((prevRequests: any) => prevRequests.filter((request: any) => request.sender.id !== userId));
-    } catch (e) {
-      console.log("Failed to decline follow request", e);
+    } catch (error) {
+      console.error("Failed to decline follow request:", error);
     }
   };
 

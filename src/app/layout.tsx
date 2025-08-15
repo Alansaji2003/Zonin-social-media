@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import NavBar from '@/components/NavBar';
 import { ClerkProvider } from '@clerk/nextjs';
-import * as hook from '@/hooks/costomRefesh';
+// Custom refresh hook moved to client components where needed
 import { dark } from '@clerk/themes';
 
 
@@ -19,7 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  hook.Refresh;
+  // Note: useRouteRefresh should be called in a client component, not here
   return (
     <ClerkProvider
     appearance={{

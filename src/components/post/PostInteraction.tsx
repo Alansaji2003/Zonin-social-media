@@ -3,28 +3,14 @@ import React, { useState } from 'react';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaRegComment, FaShare } from 'react-icons/fa';
 import axios from 'axios'; // Import axios for making HTTP requests
+import { Comment, Like } from '@/lib/types';
 
-type CommentType = {
-    id: number;
-    postId: number;
-    userId: string;
-    description: string;
-    createdAt: Date;
-};
-
-type LikeType = {
-    id: number;
-    postId: number;
-    userId: string;
-    createdAt: Date;
-};
-
-function PostInteraction({ postId, initialLikes, initialComments }: { postId: number, initialLikes: LikeType[], initialComments: CommentType[] }) {
+function PostInteraction({ postId, initialLikes, initialComments }: { postId: number, initialLikes: Like[], initialComments: Comment[] }) {
     const { isLoaded, userId } = useAuth();
 
     const [likeState, setLikeState] = useState({
         likesCount: initialLikes.length,
-        isLiked: userId ? initialLikes.some(like => like.userId === userId) : false
+        isLiked: userId ? initialLikes.some(like => like.userId === userId && like.postId === postId) : false
     });
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -60,7 +46,7 @@ function PostInteraction({ postId, initialLikes, initialComments }: { postId: nu
         }
     };
 
-    const handleAddComment = (newComment: CommentType) => {
+    const handleAddComment = (newComment: Comment) => {
         setComments(prevComments => [...prevComments, newComment]);
     };
 

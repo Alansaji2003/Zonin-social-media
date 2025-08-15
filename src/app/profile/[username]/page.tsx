@@ -119,8 +119,6 @@ const user = await db
     if(res || res2) isBlocked = true;
   }
   if(isBlocked ) return <div>User Blocked</div>;
-  console.log(username);
-  console.log(user[0]?.username);
   
   
   

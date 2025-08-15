@@ -52,10 +52,7 @@ export async function POST(req: Request) {
 
   // Do something with the payload
   // For this guide, you simply log the payload to the console
-  const { id } = evt.data;
   const eventType = evt.type;
-  // console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  // console.log('Webhook body:', body)
   if(eventType === 'user.updated') {
     try{
       await db.update(users).set({
@@ -63,8 +60,8 @@ export async function POST(req: Request) {
         avatar:JSON.parse(body).data.image_url || "/noAvatar.png",
       }).where(eq(users.id, evt.data.id))
       return new Response('User has been updated', {status: 200})
-    }catch(err){
-      console.log(err);
+    } catch (error) {
+      console.error("Failed to update user:", error);
       return new Response('Failed to update the user', {status: 500})
     }
   }
@@ -77,8 +74,8 @@ export async function POST(req: Request) {
         cover:"https://images.pexels.com/photos/1260727/pexels-photo-1260727.jpeg?auto=compress&cs=tinysrgb&w=600",
       })
       return new Response('User has been created', {status: 200})
-    }catch(err){
-      console.log(err);
+    } catch (error) {
+      console.error("Failed to create user:", error);
       return new Response('Failed to create the user', {status: 500})
     }
   }

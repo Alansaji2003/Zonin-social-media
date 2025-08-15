@@ -17,7 +17,7 @@ export default function AddPosts() {
   const [UIimage, setUIimage] = useState<string>("/addimage.png");
   const [UIvideo, setUIvideo] = useState<string>("/addVideo.png");
   const [imgtext, setimgText] = useState<string>("photo");
-  const [vdotext, setvdoText] = useState<string>("video");
+  const [videoText, setVideoText] = useState<string>("video");
   const [placeholderTxt, setPlaceholderTxt] = useState<string>("What's on your mind?");
   const [loading, setLoading] = useState(false);
 
@@ -50,7 +50,7 @@ export default function AddPosts() {
     setImg(null);
     setVideo(null);
     setUIimage("/addimage.png");
-    setvdoText("vedio");
+    setVideoText("video");
     setimgText("photo");
     setUIvideo("/addVideo.png");
     setPlaceholderTxt("What's on your mind?");
@@ -122,14 +122,14 @@ export default function AddPosts() {
                 setUIvideo("/videoUP.png");
                 setVideo(result.info);
                 setPlaceholderTxt("Add a caption for your video....!");
-                setvdoText("video ready");
+                setVideoText("video ready");
               }
               widget.close();
             }}>
             {({ open }) => (
               <div className='flex items-center gap-2 cursor-pointer' onClick={() => open()}>
                 <Image src={UIvideo} alt='' width={20} height={20} />
-                {vdotext}
+                {videoText}
               </div>
             )}
           </CldUploadWidget>

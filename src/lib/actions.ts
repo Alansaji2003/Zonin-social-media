@@ -21,7 +21,7 @@ export const switchFollow = async(userId:string) => {
             await db.delete(followers).where(eq(followers.id, existingFollow.id));
         }else{
             const existingFollowRequest = await db.query.followRequests.findFirst({
-                where:and(eq(followRequests.senderId,currentUser), eq(followRequests.recieverId, userId))
+                where:and(eq(followRequests.senderId,currentUser), eq(followRequests.receiverId, userId))
             })
             if(existingFollowRequest){
                 await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));
@@ -29,12 +29,12 @@ export const switchFollow = async(userId:string) => {
             }else{
                 await db.insert(followRequests).values({
                     senderId:currentUser,
-                    recieverId:userId,
+                    receiverId:userId,
                 })
             }
         }
-    }catch(e){
-        console.log(e);
+    } catch (error) {
+        console.error("Failed to switch follow status:", error);
         throw new Error("Failed to switch follow status");
     }
 
@@ -57,9 +57,9 @@ export const switchBlock = async(userId:string) => {
             blockedId:userId,
         })
        }
-    }catch(e){
-        console.log(e);
-        throw new Error("Failed to block switch  status");
+    } catch (error) {
+        console.error("Failed to switch block status:", error);
+        throw new Error("Failed to switch block status");
     }
 }
 
@@ -69,7 +69,7 @@ export const acceptFollowRequest = async(userId:string) => {
 
 try{
     const existingFollowRequest = await db.query.followRequests.findFirst({
-        where:and(eq(followRequests.senderId, userId), eq(followRequests.recieverId, currentUser))
+        where:and(eq(followRequests.senderId, userId), eq(followRequests.receiverId, currentUser))
     })
     if(existingFollowRequest){
         await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));
@@ -78,8 +78,8 @@ try{
         followerId:userId,
         followingId:currentUser
     })
-}catch(e){
-    console.log(e);
+} catch (error) {
+    console.error("Failed to accept follow request:", error);
     throw new Error("Failed to accept follow request");
 }
 }
@@ -89,15 +89,15 @@ export const declineFollowRequest = async(userId:string) => {
     if(!currentUser) throw new Error("User not authenticated");
     try{
         const existingFollowRequest = await db.query.followRequests.findFirst({
-            where:and(eq(followRequests.senderId, userId), eq(followRequests.recieverId, currentUser))
+            where:and(eq(followRequests.senderId, userId), eq(followRequests.receiverId, currentUser))
         })
         if(existingFollowRequest){
             await db.delete(followRequests).where(eq(followRequests.id, existingFollowRequest.id));
         }
         
-    }catch(e){
-        console.log(e);
-        throw new Error("Failed to accept follow request");
+    } catch (error) {
+        console.error("Failed to decline follow request:", error);
+        throw new Error("Failed to decline follow request");
     }
 }
 
@@ -118,7 +118,7 @@ export const updateProfile = async (formData: any, cover: string) => {
     
     const validatedFields = Profile.safeParse({ cover, ...fields });
     if (!validatedFields.success) {
-      console.log(validatedFields.error.flatten().fieldErrors);
+      console.error("Profile validation failed:", validatedFields.error.flatten().fieldErrors);
       return { success: false, error: true };
     }
   
@@ -138,8 +138,8 @@ export const updateProfile = async (formData: any, cover: string) => {
       }).where(eq(users.id, userId));
   
       return { success: true, error: false };
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Failed to update profile:", error);
       return { success: false, error: true };
     }
   };
@@ -152,7 +152,7 @@ export const insertLike = async ({ postId, userId }: { postId: number, userId: s
             userId: userId
         });
     } catch (error) {
-        console.log(error);
+        console.error("Failed to like the post:", error);
         throw new Error("Failed to like the post");
     }
 
@@ -162,7 +162,7 @@ export const deleteLike = async ({ postId, userId }: { postId: number, userId: s
     try {
         await db.delete(likes).where(and(eq(likes.postId, postId), eq(likes.userId, userId)));
     } catch (error) {
-        console.log(error);
+        console.error("Failed to dislike the post:", error);
         throw new Error("Failed to dislike the post");
     }
 }
@@ -187,9 +187,8 @@ export const addComment = async(postId:number, desc:string) => {
         userId,
         description:desc
     })
-  } catch(e){
-    console.log(e);
-    
+  } catch (error) {
+    console.error("Failed to add comment:", error);
     throw new Error("Failed to add comment");
   } 
 
@@ -204,8 +203,7 @@ export const addPost = async (formData:FormData, img:string) => {
     const validateddesc = Desc.safeParse(desc);
 
     if(!validateddesc.success){
-        console.log("Invalid description");
-        
+        console.error("Invalid description:", validateddesc.error);
         return;
     }   
     const {userId} = auth();
@@ -220,8 +218,8 @@ export const addPost = async (formData:FormData, img:string) => {
         })
 
         revalidatePath("/")
-    }catch(e){
-        console.log(e);
+    } catch (error) {
+        console.error("Failed to add post:", error);
         throw new Error("Failed to add post");
     }
    
@@ -236,8 +234,7 @@ export const addVedioPost = async (formData:FormData, vedio:string) => {
       const validateddesc = Desc.safeParse(desc);
   
       if(!validateddesc.success){
-          console.log("Invalid description");
-          
+          console.error("Invalid video description:", validateddesc.error);
           return;
       }   
       const {userId} = auth();
@@ -252,8 +249,8 @@ export const addVedioPost = async (formData:FormData, vedio:string) => {
           })
   
           revalidatePath("/")
-      }catch(e){
-          console.log(e);
+      } catch (error) {
+          console.error("Failed to add video post:", error);
           throw new Error("Failed to add post");
       }
 }
@@ -267,8 +264,8 @@ const getUserById = async (userId: string): Promise<User> => {
         throw new Error("User not found");
       }
       return user;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
       throw new Error("Failed to fetch user");
     }
   };
@@ -292,8 +289,8 @@ const getUserById = async (userId: string): Promise<User> => {
       // console.log(storiesWithUserDetails);
       if(!storiesWithUserDetails) throw new Error("Failed to fetch stories");
       return storiesWithUserDetails;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Failed to fetch stories:", error);
       throw new Error("Failed to fetch stories");
     }
   };
@@ -331,8 +328,8 @@ const getUserById = async (userId: string): Promise<User> => {
         ...story,
         user,
       };
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Failed to add story:", error);
       throw new Error("Failed to add story");
     }
   };
@@ -343,7 +340,7 @@ export const deletePost = async (postId: number) => {
         await db.delete(posts).where(and(eq(posts.id, postId), eq(posts.userId, userId)));
         revalidatePath("/");
     } catch (error) {
-        console.log(error);
+        console.error("Failed to delete the post:", error);
         throw new Error("Failed to delete the post");
     }
 }
@@ -355,7 +352,7 @@ export const getAllUsers = async () => {
         const Users = await db.query.users.findMany();
         return Users;
     } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch users:", error);
         throw new Error("Failed to fetch users");
     }
 }

@@ -12,8 +12,6 @@ async function ProfileCard() {
   
   const {userId} = auth();
   
-  console.log(userId);
-  
   if (userId == null) return null;
     const user = await db.select({
       id: users.id,
@@ -47,8 +45,6 @@ async function ProfileCard() {
       users.website,
       users.createdAt
     );
-  
-    console.log(user);
     
   
   if(!user) return null;

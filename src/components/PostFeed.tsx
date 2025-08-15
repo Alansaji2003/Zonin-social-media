@@ -4,53 +4,13 @@ import { db } from '../../utils/dbConfig';
 import { comments, followers, likes, posts, users } from '../../utils/schema';
 import { desc, eq, inArray } from 'drizzle-orm';
 
-type UserType = {
-  id: string;
-  username: string;
-  avatar: string | null;
-  cover: string | null;
-  f_name: string | null;
-  l_name: string | null;
-  description: string | null;
-  city: string | null;
-  school: string | null;
-  work: string | null;
-  website: string | null;
-  createdAt: Date | null;
-};
-
-type PostType = {
-  id: number;
-  userId: string;
-  img: string | null;
-  description: string | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
-  user: UserType;
-  comments: CommentType[];
-  likes: LikeType[];
-};
-
-type CommentType = {
-  id: number;
-  postId: number;
-  userId: string;
-  description: string;
-  createdAt: Date;
-};
-
-type LikeType = {
-  id: number;
-  postId: number;
-  userId: string;
-  createdAt: Date;
-};
+import { Post } from '@/lib/types';
 
 type PostsFeedProps = {
   username: string;
 };
 
-const fetchPosts = async (condition: any) => {
+const fetchPosts = async (condition: any): Promise<{ [key: number]: Post }> => {
   const rawPostsFeed = await db
     .select()
     .from(posts)
@@ -60,7 +20,7 @@ const fetchPosts = async (condition: any) => {
     .where(condition)
     .orderBy(desc(posts.createdAt));
 
-  return rawPostsFeed.reduce((groupedPosts: { [key: number]: PostType }, rawPost: any) => {
+  return rawPostsFeed.reduce((groupedPosts: { [key: number]: Post }, rawPost: any) => {
     const postId = rawPost.Post.id;
 
     if (!groupedPosts[postId]) {
@@ -120,7 +80,7 @@ export default async function PostFeed({ username }: PostsFeedProps) {
   const { userId } = auth();
   if (!userId) return null;
 
-  let postsFeed: PostType[] = [];
+  let postsFeed: Post[] = [];
 
   try {
     if (username != 'false') {
